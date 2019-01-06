@@ -24,4 +24,10 @@ public class KenclengHolder extends AppCompatActivity {
         edtCatatan= (EditText) findViewById(R.id.edt_catatan);
         btnAdd = (Button) findViewById(R.id.btnAdd);
     }
+
+    public KenclengHolder(EditText edtNominal, EditText edtCatatan, Button btnAdd) {
+        this.edtNominal = edtNominal;
+        this.edtCatatan = edtCatatan;
+        this.btnAdd = btnAdd;
+    }
 }
