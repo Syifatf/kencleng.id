@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 public class DetailKenclenganActivity extends AppCompatActivity {
 
-    private EditText edtnominal, edtcatatan;
+    private EditText edtNominal, edtCatatan;
     private Button btnAdd;
 
     @Override
@@ -16,8 +16,8 @@ public class DetailKenclenganActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_kenclengan);
 
         // casting untuk semua view
-        edtnominal = (EditText) findViewById(R.id.edt_nominal);
-        edtcatatan = (EditText) findViewById(R.id.edt_catatan);
+        edtNominal = (EditText) findViewById(R.id.edt_nominal);
+        edtCatatan= (EditText) findViewById(R.id.edt_catatan);
         btnAdd = (Button) findViewById(R.id.btnAdd);
 
         }
