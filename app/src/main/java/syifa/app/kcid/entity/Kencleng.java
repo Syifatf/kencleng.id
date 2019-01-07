@@ -7,11 +7,17 @@ import java.io.Serializable;
  * Created by USER on 06/01/2019.
  */
 
-public class Kenclengan implements Serializable {
+public class Kencleng implements Serializable {
 
     private int id;
     private int nominal;
     private String catatan;
+    private static String kencleng;
+
+    public static String getKencleng() {
+        return kencleng;
+    }
+
 
     public void setId(int id) {
         this.id = id;

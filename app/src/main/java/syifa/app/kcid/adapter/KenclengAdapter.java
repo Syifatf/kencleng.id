@@ -1,19 +1,20 @@
 package syifa.app.kcid.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
+import syifa.app.kcid.DetailKenclenganActivity;
 import syifa.app.kcid.R;
-import syifa.app.kcid.entity.Kenclengan;
+import syifa.app.kcid.entity.Kencleng;
 import syifa.app.kcid.holder.KenclengHolder;
-
-import static android.R.attr.x;
+import syifa.app.kcid.util.Consts;
 
 /**
  * Created by USER on 06/01/2019.
@@ -21,39 +22,61 @@ import static android.R.attr.x;
 
 public class KenclengAdapter extends RecyclerView.Adapter<KenclengHolder> {
 
-    private List<Kenclengan> Kenclengans;
-    private KenclenganListener listener;
+    private List<Kencleng> kenclengs;
+    private KenclengListener listener;
 
-    public KenclengAdapter(List<Kenclengan> kenclengans, KenclenganListener listener) {
-        Kenclengans = kenclengans;
+    public KenclengAdapter(List<Kencleng> kenclengs) {
+        this.kenclengs = kenclengs;
+    }
+
+    public void setListener(KenclengListener Listener) {
         this.listener = listener;
     }
 
-    public void setKenclengans(List<Kenclengan> kenclengans) {
-        Kenclengans = kenclengans;
-    }
-
-    public void setListener(KenclenganListener listener) {
-        this.listener = listener;
-    }
-
-    @NonNull
     @Override
-    public KenclengHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext().inflate(R.layout.));
-        return null;
+    public KenclengHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_kenclengan, parent, false);
+        final KenclengHolder holder = new KenclengHolder(view);
+
+        final Context context = holder.itemView.getContext();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //definisikan position untuk getKencleng.
+                int adapterPosition = holder.getAdapterPosition();
+                Kencleng kencleng = kenclengs.get(adapterPosition);
+
+                Intent detailIntent = new Intent(context, DetailKenclenganActivity.class);
+                detailIntent.putExtra("kencleng", kencleng);
+                detailIntent.putExtra(Consts.KEY_ACTION_DETAIL, Consts.INTENT_EDIT);
+                context.startActivity(detailIntent);
+            }
+        });
+
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull KenclengHolder holder, int position) {
+    public void onBindViewHolder(KenclengHolder holder, final int position) {
+        holder.edtNominal.setText(kenclengs.get(position).getNominal());
+        holder.edtCatatan.setText(kenclengs.get(position).getCatatan());
 
+        //tambahkan fungsi delete
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDelete(kenclengs.get(position).getId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return kenclengs.size();
     }
 
-    private class KenclenganListener {
+    public interface KenclengListener {
+        void onDelete(int mhsId);
     }
+
 }
